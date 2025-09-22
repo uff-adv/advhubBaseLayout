@@ -1,21 +1,12 @@
-import { AppSidebar } from '../AppSidebar'
-import { SidebarProvider } from "@/components/ui/sidebar"
+import { AppHeader } from '../AppHeader'
 
-export default function AppSidebarExample() {
-  // Custom sidebar width for better demonstration
-  const style = {
-    "--sidebar-width": "16rem",
-    "--sidebar-width-icon": "4rem",
-  }
-
+export default function MenuExample() {
   return (
-    <SidebarProvider style={style as React.CSSProperties}>
-      <div className="flex h-96 w-full">
-        <AppSidebar />
-        <div className="flex-1 p-4">
-          <p className="text-muted-foreground">Main content area would go here</p>
-        </div>
+    <div className="w-full">
+      <AppHeader />
+      <div className="p-4 text-sm text-muted-foreground">
+        This shows the dropdown menu functionality. Click the "App Template" logo to see the navigation menu.
       </div>
-    </SidebarProvider>
+    </div>
   )
 }
