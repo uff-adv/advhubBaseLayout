@@ -10,7 +10,7 @@ export function MainContent() {
     <div className="w-full overflow-auto p-6">
       <div className="max-w-4xl mx-auto space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Welcome to the Mercury Web Theme Template</h1>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Welcome to the AdvancementHUB Template</h1>
           <p className="text-muted-foreground">
             This template follows the University of Florida's official Mercury web theme guidelines. 
             Built with UF brand colors, professional styling, and accessibility compliance.
@@ -110,5 +110,5 @@ export function MainContent() {
         </Card>
       </div>
     </div>
-  )
+  );
 }
