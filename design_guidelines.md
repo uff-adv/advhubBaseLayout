@@ -1,26 +1,27 @@
-# Application Template Design Guidelines
+# Application Template Design Guidelines - Mercury Web Theme
 
 ## Design Approach
-**Selected Approach**: Design System Approach (Utility-Focused)
-**System**: Material Design with custom adaptations
-**Justification**: This is a reusable application template prioritizing functionality, consistency, and developer efficiency. The design should establish clear patterns that work across various use cases.
+**Selected Approach**: University of Florida Mercury Web Theme
+**System**: UF Brand Guidelines with Mercury theme components
+**Justification**: Following UF's official Mercury web theme for brand consistency, accessibility compliance, and professional appearance using the university's established design patterns.
 
 ## Core Design Elements
 
-### Color Palette
+### Color Palette (UF Brand Colors)
 **Primary Colors**:
-- Light mode: 220 15% 15% (dark slate)
-- Dark mode: 220 15% 85% (light slate)
+- UF Orange: 14 100% 53% (#FA4616)
+- UF Blue: 232 100% 33% (#0021A5)
 
 **Background Colors**:
 - Light mode surfaces: 0 0% 98% (near white)
-- Dark mode surfaces: 220 15% 8% (very dark slate)
-- Sidebar background: Slightly darker than main background
+- Dark mode surfaces: 232 15% 8% (very dark blue)
+- Card backgrounds: Clean white/light gray with subtle borders
 
 **Accent Colors**:
-- Interactive elements: 210 100% 50% (bright blue)
+- Interactive elements: UF Orange for primary actions
+- Secondary elements: UF Blue for links and info
 - Success states: 120 60% 45% (green)
-- Warning states: 35 85% 55% (orange)
+- Warning states: UF Orange variant
 
 ### Typography
 **Font Families**: 

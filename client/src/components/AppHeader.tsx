@@ -69,11 +69,13 @@ export function AppHeader() {
           <DropdownMenuTrigger asChild>
             <Button 
               variant="ghost" 
-              className="flex items-center gap-2 hover-elevate"
+              className="flex items-center gap-3 hover-elevate"
               data-testid="button-menu-toggle"
             >
-              <div className="h-6 w-6 bg-primary rounded-sm" />
-              <h1 className="font-semibold text-xl text-foreground">App Template</h1>
+              <div className="h-8 w-8 bg-primary rounded-sm flex items-center justify-center">
+                <span className="text-primary-foreground font-bold text-sm">UF</span>
+              </div>
+              <h1 className="font-semibold text-xl text-foreground">Mercury Template</h1>
               <ChevronDown className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>

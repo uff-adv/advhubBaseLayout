@@ -10,19 +10,19 @@ export function MainContent() {
     <div className="w-full overflow-auto p-6">
       <div className="max-w-4xl mx-auto space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Welcome to Your Application Template</h1>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Welcome to the Mercury Web Theme Template</h1>
           <p className="text-muted-foreground">
-            This is a flexible template with header, sidebar navigation, and main content area. 
-            Perfect foundation for building modern web applications.
+            This template follows the University of Florida's official Mercury web theme guidelines. 
+            Built with UF brand colors, professional styling, and accessibility compliance.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card className="hover-elevate">
             <CardHeader>
-              <CardTitle>Responsive Design</CardTitle>
+              <CardTitle>UF Brand Compliance</CardTitle>
               <CardDescription>
-                Built with mobile-first approach using Tailwind CSS
+                Using official University of Florida colors and branding guidelines
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -37,9 +37,9 @@ export function MainContent() {
 
           <Card className="hover-elevate">
             <CardHeader>
-              <CardTitle>Dark Mode Ready</CardTitle>
+              <CardTitle>Mercury Components</CardTitle>
               <CardDescription>
-                Toggle between light and dark themes seamlessly
+                Professional styling following Mercury web theme patterns
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -48,16 +48,16 @@ export function MainContent() {
                 onClick={() => handleButtonClick("Try theme")}
                 data-testid="button-theme"
               >
-                Try Theme Toggle
+                View Components
               </Button>
             </CardContent>
           </Card>
 
           <Card className="hover-elevate">
             <CardHeader>
-              <CardTitle>Component Library</CardTitle>
+              <CardTitle>Accessibility Ready</CardTitle>
               <CardDescription>
-                Pre-built components using Shadcn UI system
+                Meets UF accessibility standards and WCAG guidelines
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -66,7 +66,7 @@ export function MainContent() {
                 onClick={() => handleButtonClick("Explore")}
                 data-testid="button-components"
               >
-                Explore Components
+                Accessibility Info
               </Button>
             </CardContent>
           </Card>
@@ -81,14 +81,14 @@ export function MainContent() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <h3 className="font-semibold">Template Features:</h3>
+              <h3 className="font-semibold">Mercury Theme Features:</h3>
               <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                <li>Collapsible sidebar navigation with dynamic menu items</li>
-                <li>Responsive header with theme toggle</li>
-                <li>Flexible main content area</li>
-                <li>Dark/light mode support</li>
-                <li>Professional styling with Shadcn UI</li>
-                <li>Ready for customization and extension</li>
+                <li>Official UF brand colors (Orange and Blue)</li>
+                <li>Full-width header with dropdown navigation</li>
+                <li>Responsive layout optimized for all devices</li>
+                <li>Accessibility compliance following UF standards</li>
+                <li>Professional Mercury theme styling</li>
+                <li>Modular components for easy customization</li>
               </ul>
             </div>
             <div className="flex gap-2">
