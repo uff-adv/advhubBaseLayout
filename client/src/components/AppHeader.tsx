@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings, Users, FileText, BarChart3, ChevronDown } from "lucide-react"
+import { Calendar, Home, Inbox, Search, Settings, Users, FileText, BarChart3, ChevronDown, User } from "lucide-react"
 import { ThemeToggle } from "./ThemeToggle"
 import { Button } from "@/components/ui/button"
 import {
@@ -111,7 +111,7 @@ export function AppHeader() {
         </DropdownMenu>
       </div>
       <div className="flex items-center gap-2">
-        <ThemeToggle />
+        <User className="h-6 w-6 text-white" data-testid="icon-user" />
       </div>
     </header>
   );
