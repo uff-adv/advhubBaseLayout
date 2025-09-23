@@ -75,8 +75,8 @@ export function AppHeader() {
               <div className="h-8 w-8 bg-primary rounded-sm flex items-center justify-center">
                 <span className="text-primary-foreground font-bold text-sm">UF</span>
               </div>
-              <h1 className="font-semibold text-xl text-foreground">AdvancementHUB</h1>
-              <ChevronDown className="h-4 w-4" />
+              <h1 className="font-semibold text-xl text-white">AdvancementHUB</h1>
+              <ChevronDown className="h-4 w-4 text-white" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-56">
