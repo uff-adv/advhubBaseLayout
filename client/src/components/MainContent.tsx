@@ -11,7 +11,7 @@ export function MainContent() {
       <div className="max-w-4xl mx-auto space-y-6">
         <div>
           <h1 className="text-3xl font-bold text-foreground mb-2">Welcome to the AdvancementHUB Template</h1>
-          <p className="text-muted-foreground">This template follows the AdvancementHUB's official web theme guidelines. Built with UF brand colors, professional styling, and accessibility compliance.</p>
+          <p className="text-muted-foreground">This template follows the AdvancementHUB's official web theme guidelines. Built with UF brand colors, professional styling, and accessibility compliance.etc.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
