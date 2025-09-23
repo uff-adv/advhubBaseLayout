@@ -63,7 +63,7 @@ export function AppHeader() {
   }
 
   return (
-    <header className="w-full flex items-center justify-between p-4 border-b bg-background">
+    <header className="w-full flex items-center justify-between p-4 border-b bg-[#0016a8]">
       <div className="flex items-center gap-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -114,5 +114,5 @@ export function AppHeader() {
         <ThemeToggle />
       </div>
     </header>
-  )
+  );
 }
