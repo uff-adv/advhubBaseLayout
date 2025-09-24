@@ -9,20 +9,20 @@ import {
 import { useProfile } from "@/hooks/useProfile";
 
 export function ProfileDropdown() {
-  const { profile, isLoading, error, fullName } = useProfile();
+  const { profile, isLoading, error, fullName, ufid } = useProfile();
   const [showFullUFID, setShowFullUFID] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const maskUFID = (ufid: string) => {
-    if (!ufid) return '';
-    if (ufid.length <= 2) return ufid;
+  const maskUFID = (ufidValue: string) => {
+    if (!ufidValue) return '';
+    if (ufidValue.length <= 2) return ufidValue;
     
-    const firstTwo = ufid.substring(0, 2);
-    const masked = '•'.repeat(Math.max(0, ufid.length - 2));
+    const firstTwo = ufidValue.substring(0, 2);
+    const masked = '•'.repeat(Math.max(0, ufidValue.length - 2));
     return firstTwo + masked;
   };
 
-  const displayUFID = profile?.UFID ? (showFullUFID ? profile.UFID : maskUFID(profile.UFID)) : '';
+  const displayUFID = ufid ? (showFullUFID ? ufid : maskUFID(ufid)) : '';
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -66,14 +66,14 @@ export function ProfileDropdown() {
             <>
               <div>
                 <div className="font-medium text-base" data-testid="text-profile-name">
-                  {fullName || 'Development User'}
+                  {fullName || 'User'}
                 </div>
               </div>
               
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">UFID:</span>
-                  {displayUFID && (
+                  {ufid && (
                     <Button
                       variant="ghost"
                       size="icon"
@@ -86,7 +86,7 @@ export function ProfileDropdown() {
                   )}
                 </div>
                 <div className="font-mono text-sm" data-testid="text-profile-ufid">
-                  {displayUFID || 'Not available in development'}
+                  {displayUFID || 'Not available'}
                 </div>
               </div>
             </>

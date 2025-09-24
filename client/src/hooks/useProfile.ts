@@ -1,39 +1,33 @@
 import { useQuery } from "@tanstack/react-query";
 
 export interface ProfileData {
-  FirstName: string;
-  LastName: string;
-  UFID: string;
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  samlProfile: {
+    UFID: string;
+    [key: string]: any;
+  };
+  samlRoles: string[];
 }
 
 export function useProfile() {
   const { data: profile, isLoading, error } = useQuery<ProfileData>({
-    queryKey: ['/external/profile'],
+    queryKey: ['/api/auth/me'],
     queryFn: async () => {
-      console.log('Fetching profile from external API...');
-      const response = await fetch('https://hubdev.uff.ufl.edu/BaseLayout/api/auth/me', {
+      const response = await fetch('/api/auth/me', {
         credentials: 'include',
         headers: {
           'Accept': 'application/json',
         },
       });
       
-      console.log('Profile API response status:', response.status);
-      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       const data = await response.json();
-      console.log('Profile API response data:', data);
-      
-      // Check if we have the expected data structure
-      if (!data || (!data.FirstName && !data.LastName && !data.UFID)) {
-        console.warn('API returned unexpected data structure:', data);
-        // Return null to trigger the fallback UI
-        return null;
-      }
-      
       return data;
     },
     retry: 1,
@@ -41,18 +35,24 @@ export function useProfile() {
     refetchOnWindowFocus: false,
   });
 
-  // Better handling of fullName to avoid "undefined undefined"
+  // Extract full name from SAML data
   const getFullName = () => {
     if (!profile) return '';
     
-    const firstName = profile.FirstName || '';
-    const lastName = profile.LastName || '';
+    const firstName = profile.firstName || '';
+    const lastName = profile.lastName || '';
     
     if (!firstName && !lastName) {
-      return 'User Name'; // Fallback for development
+      return '';
     }
     
     return `${firstName} ${lastName}`.trim();
+  };
+
+  // Extract UFID from SAML profile
+  const getUFID = () => {
+    if (!profile?.samlProfile) return '';
+    return profile.samlProfile.UFID || '';
   };
 
   return {
@@ -60,5 +60,6 @@ export function useProfile() {
     isLoading,
     error,
     fullName: getFullName(),
+    ufid: getUFID(),
   };
 }
