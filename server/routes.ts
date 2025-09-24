@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { z } from "zod";
+import crypto from "crypto";
 import passport, { isSamlConfigured } from "./auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -26,7 +27,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
     const session = req.session as any;
     if (!session.csrfToken) {
-      session.csrfToken = require("crypto").randomBytes(32).toString("hex");
+      session.csrfToken = crypto.randomBytes(32).toString("hex");
     }
 
     res.json({ csrfToken: session.csrfToken });
@@ -72,58 +73,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post(
     "/auth/saml/callback",
     (req, res, next) => {
-      console.log("=== SAML Callback received ===");
-      console.log("Request method:", req.method);
-      console.log("Request headers:", req.headers);
-      console.log("Request body:", req.body);
-      console.log("Request query:", req.query);
+      console.log("SAML callback received");
       passport.authenticate("saml", {
         failureRedirect: "/login?error=callback_failed",
       })(req, res, next);
     },
     (req, res) => {
-      console.log("=== SAML Authentication successful ===");
-      console.log("User:", req.user);
+      console.log("SAML authentication completed");
       if (!req.user) {
-        console.error("No user object after SAML authentication");
+        console.error("SAML authentication failed - no user object");
         return res.redirect("/login?error=no_user");
       }
       // Log the user in to establish session
       req.login(req.user, (loginErr) => {
         if (loginErr) {
-          console.error("Error logging in user:", loginErr);
+          console.error("Session establishment failed");
           return res.redirect("/login?error=login_failed");
         }
-        console.log("User logged in successfully");
+        console.log("User session established successfully");
         // Extract SAML data from user object and save to session
         const user = req.user as any;
         if (user.samlProfile) {
           (req.session as any).samlProfile = user.samlProfile;
-          console.log("Saved SAML Profile to session:", user.samlProfile);
         }
         if (user.samlRoles) {
           (req.session as any).samlRoles = user.samlRoles;
-          console.log("Saved SAML Roles to session:", user.samlRoles);
         }
-        console.log("Session SAML Profile:", (req.session as any)?.samlProfile);
-        console.log("Session SAML Roles:", (req.session as any)?.samlRoles);
         // Get redirect URL from environment or default to '/'
         const redirectUrl = process.env.SAML_SUCCESS_REDIRECT || "/";
-        console.log("Redirecting to:", redirectUrl);
+        console.log("Redirecting authenticated user");
         // Ensure session is saved before redirecting
         req.session.save((err) => {
           if (err) {
-            console.error("Session save error:", err);
+            console.error("Session save error");
           }
-          // Todu: - success redirect somewhere other than root
           res.redirect(redirectUrl);
         });
       });
     },
   );
 
-  // Logout endpoint
-  app.post("/api/auth/logout", (req, res) => {
+  // Logout endpoint with CSRF protection
+  app.post("/api/auth/logout", csrfProtection, (req, res) => {
     if (!req.session) {
       return res.status(500).json({ error: "Session not available" });
     }

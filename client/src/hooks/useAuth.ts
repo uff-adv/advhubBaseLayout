@@ -34,9 +34,29 @@ export function useAuth() {
     retry: 1,
   });
 
-  // Logout mutation
+  // Logout mutation with CSRF protection
   const logoutMutation = useMutation({
-    mutationFn: () => apiRequest('/api/auth/logout', 'POST'),
+    mutationFn: async () => {
+      // Get CSRF token first
+      const csrfResponse = await fetch('/api/auth/csrf-token');
+      const { csrfToken } = await csrfResponse.json();
+      
+      // Use the apiRequest function with additional headers
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-csrf-token': csrfToken,
+        },
+        credentials: 'same-origin',
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return response.json();
+    },
     onSuccess: () => {
       // Invalidate all auth-related queries
       queryClient.invalidateQueries({ queryKey: ['/api/auth'] });
