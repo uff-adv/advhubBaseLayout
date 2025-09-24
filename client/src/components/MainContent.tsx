@@ -18,9 +18,7 @@ export function MainContent() {
           <Card className="hover-elevate">
             <CardHeader>
               <CardTitle>UF Brand Compliance</CardTitle>
-              <CardDescription>
-                Using official University of Florida colors and branding guidelines
-              </CardDescription>
+              <CardDescription>Using official University of Florida colors and branding guidelines.</CardDescription>
             </CardHeader>
             <CardContent>
               <Button 
