@@ -62,34 +62,34 @@ export function ProfileDropdown() {
             <div className="text-sm text-muted-foreground">Loading profile...</div>
           ) : error ? (
             <div className="text-sm text-destructive">Failed to load profile</div>
-          ) : profile ? (
+          ) : (
             <>
               <div>
                 <div className="font-medium text-base" data-testid="text-profile-name">
-                  {fullName}
+                  {fullName || 'Development User'}
                 </div>
               </div>
               
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">UFID:</span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6 text-muted-foreground hover:text-foreground"
-                    onClick={() => setShowFullUFID(!showFullUFID)}
-                    data-testid="button-toggle-ufid"
-                  >
-                    {showFullUFID ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </Button>
+                  {displayUFID && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6 text-muted-foreground hover:text-foreground"
+                      onClick={() => setShowFullUFID(!showFullUFID)}
+                      data-testid="button-toggle-ufid"
+                    >
+                      {showFullUFID ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </Button>
+                  )}
                 </div>
                 <div className="font-mono text-sm" data-testid="text-profile-ufid">
-                  {displayUFID}
+                  {displayUFID || 'Not available in development'}
                 </div>
               </div>
             </>
-          ) : (
-            <div className="text-sm text-muted-foreground">No profile data available</div>
           )}
         </div>
       </DropdownMenuContent>
