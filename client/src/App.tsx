@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppHeader } from "@/components/AppHeader";
 import { Home } from "@/pages/Home";
 import NotFound from "@/pages/not-found";
+import { AuthGuard } from "@/components/AuthGuard";
 
 function Router() {
   return (
@@ -16,16 +17,24 @@ function Router() {
   );
 }
 
+function ProtectedContent() {
+  return (
+    <div className="flex flex-col h-screen w-full">
+      <AppHeader />
+      <main className="flex-1 overflow-hidden">
+        <Router />
+      </main>
+    </div>
+  );
+}
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="flex flex-col h-screen w-full">
-          <AppHeader />
-          <main className="flex-1 overflow-hidden">
-            <Router />
-          </main>
-        </div>
+        <AuthGuard>
+          <ProtectedContent />
+        </AuthGuard>
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
