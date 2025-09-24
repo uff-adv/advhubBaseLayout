@@ -4,15 +4,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { LogIn, AlertTriangle } from "lucide-react";
 import { useEffect } from "react";
-import { useLocation } from "wouter";
+import { useSearchParams } from "react-router-dom";
 
 export default function Login() {
   const { startSamlLogin, isAuthenticated } = useAuth();
-  const [location] = useLocation();
+  const [searchParams] = useSearchParams();
   
   // Get error from URL parameters
-  const urlParams = new URLSearchParams(window.location.search);
-  const error = urlParams.get('error');
+  const error = searchParams.get('error');
 
   // Redirect if already authenticated
   useEffect(() => {
