@@ -29,9 +29,10 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <BrowserRouter basename={basename}>
-          <AuthGuard>
+          {/* Temporarily disabled authentication */}
+          {/* <AuthGuard> */}
             <ProtectedContent />
-          </AuthGuard>
+          {/* </AuthGuard> */}
         </BrowserRouter>
         <Toaster />
       </TooltipProvider>
