@@ -1,6 +1,6 @@
-import { Calendar, Home, Inbox, Search, Settings, Users, FileText, BarChart3, ChevronDown } from "lucide-react"
-import { ThemeToggle } from "./ThemeToggle"
+import { ChevronDown, ExternalLink, Loader2 } from "lucide-react"
 import { ProfileDropdown } from "./ProfileDropdown"
+import { useTopMenu } from "@/hooks/useTopMenu"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -11,56 +11,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-// Template menu items - can be easily customized for different applications
-const menuItems = [
-  {
-    title: "Dashboard",
-    url: "/",
-    icon: Home,
-  },
-  {
-    title: "Users",
-    url: "/users",
-    icon: Users,
-  },
-  {
-    title: "Documents",
-    url: "/documents",
-    icon: FileText,
-  },
-  {
-    title: "Analytics",
-    url: "/analytics",
-    icon: BarChart3,
-  },
-  {
-    title: "Search",
-    url: "/search",
-    icon: Search,
-  },
-]
-
-const secondaryItems = [
-  {
-    title: "Calendar",
-    url: "/calendar",
-    icon: Calendar,
-  },
-  {
-    title: "Messages",
-    url: "/messages",
-    icon: Inbox,
-  },
-  {
-    title: "Settings",
-    url: "/settings",
-    icon: Settings,
-  },
-]
-
 export function AppHeader() {
-  const handleMenuClick = (item: typeof menuItems[0]) => {
+  const { menuItems, isLoading, error } = useTopMenu();
+
+  const handleMenuClick = (item: { title: string; url: string }) => {
     console.log(`Navigating to ${item.title}: ${item.url}`)
+    // Add actual navigation logic here if needed
   }
 
   return (
@@ -81,33 +37,40 @@ export function AppHeader() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-56">
-            <DropdownMenuLabel>Application</DropdownMenuLabel>
+            <DropdownMenuLabel>AdvancementHUB</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {menuItems.map((item) => (
-              <DropdownMenuItem 
-                key={item.title} 
-                onClick={() => handleMenuClick(item)}
-                data-testid={`nav-${item.title.toLowerCase()}`}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <item.icon className="h-4 w-4" />
-                <span>{item.title}</span>
+            
+            {isLoading ? (
+              <DropdownMenuItem disabled className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span>Loading menu...</span>
               </DropdownMenuItem>
-            ))}
-            <DropdownMenuSeparator />
-            <DropdownMenuLabel>Tools</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {secondaryItems.map((item) => (
-              <DropdownMenuItem 
-                key={item.title} 
-                onClick={() => handleMenuClick(item)}
-                data-testid={`nav-${item.title.toLowerCase()}`}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <item.icon className="h-4 w-4" />
-                <span>{item.title}</span>
+            ) : error ? (
+              <DropdownMenuItem disabled className="flex items-center gap-2 text-destructive">
+                <ExternalLink className="h-4 w-4" />
+                <span>Menu unavailable</span>
               </DropdownMenuItem>
-            ))}
+            ) : (
+              menuItems
+                .filter(item => item.isActive !== false)
+                .sort((a, b) => (a.order || 0) - (b.order || 0))
+                .map((item) => (
+                  <DropdownMenuItem 
+                    key={item.id || item.title} 
+                    onClick={() => handleMenuClick(item)}
+                    data-testid={`nav-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    <div className="flex flex-col">
+                      <span>{item.title}</span>
+                      {item.description && (
+                        <span className="text-xs text-muted-foreground">{item.description}</span>
+                      )}
+                    </div>
+                  </DropdownMenuItem>
+                ))
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
