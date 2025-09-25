@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { z } from "zod";
 import crypto from "crypto";
 import passport, { isSamlConfigured } from "./auth";
+import ufApiService from "./uf-api";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Simple CSRF protection middleware
@@ -55,6 +56,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ authenticated: true, user: req.user });
     } else {
       res.json({ authenticated: false });
+    }
+  });
+
+  // UF API menu endpoint
+  app.get("/api/uf/menu", async (req, res) => {
+    try {
+      const menuItems = await ufApiService.getTopMenu();
+      
+      // Transform menu items to our expected format
+      const transformedItems = menuItems.map((item, index) => ({
+        id: item.id || `menu-${index}`,
+        title: item.title || item.name || item.displayName || 'Menu Item',
+        url: item.url || item.link || item.href || '#',
+        description: item.description || '',
+        order: item.order !== undefined ? item.order : index,
+        parentId: item.parentId || null,
+        isActive: item.isActive !== false,
+      }));
+
+      res.json(transformedItems);
+    } catch (error) {
+      console.error('Failed to fetch UF menu data:', error);
+      
+      // Return fallback menu on error
+      const fallbackMenu = [
+        { id: 'dashboard', title: 'Dashboard', url: '/', description: 'Main dashboard', order: 1 },
+        { id: 'advancement', title: 'Advancement', url: '/advancement', description: 'Advancement tools', order: 2 },
+        { id: 'analytics', title: 'Analytics', url: '/analytics', description: 'Data analytics', order: 3 },
+        { id: 'reports', title: 'Reports', url: '/reports', description: 'Generate reports', order: 4 },
+        { id: 'settings', title: 'Settings', url: '/settings', description: 'Application settings', order: 5 },
+      ];
+      
+      res.status(200).json(fallbackMenu); // Still return 200 with fallback data
     }
   });
 

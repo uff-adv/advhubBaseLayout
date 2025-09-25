@@ -12,46 +12,23 @@ export interface TopMenuItem {
 
 export function useTopMenu() {
   const { data: menuItems, isLoading, error } = useQuery<TopMenuItem[]>({
-    queryKey: ['/api/uf/topmenu'],
+    queryKey: ['/api/uf/menu'],
     queryFn: async () => {
-      try {
-        const response = await fetch('https://advapi.uff.ufl.edu/api/Test/TopMenu', {
-          credentials: 'include',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-        });
-        
-        if (!response.ok) {
-          // If API fails, return fallback menu items
-          console.warn(`UF API returned ${response.status}, using fallback menu`);
-          return getFallbackMenu();
-        }
-        
-        const data = await response.json();
-        
-        // Transform API data to our format if needed
-        if (Array.isArray(data)) {
-          return data.map((item: any, index: number) => ({
-            id: item.id || `menu-${index}`,
-            title: item.title || item.name || item.displayName || 'Menu Item',
-            url: item.url || item.link || item.href || '#',
-            description: item.description || '',
-            order: item.order || index,
-            parentId: item.parentId || null,
-            isActive: item.isActive !== false,
-          }));
-        }
-        
-        return getFallbackMenu();
-      } catch (error) {
-        console.error('Error fetching top menu:', error);
-        return getFallbackMenu();
+      const response = await fetch('/api/uf/menu', {
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      
+      return response.json();
     },
-    retry: 1,
-    staleTime: 10 * 60 * 1000, // 10 minutes
+    retry: 2,
+    staleTime: 5 * 60 * 1000, // 5 minutes
     refetchOnWindowFocus: false,
   });
 
