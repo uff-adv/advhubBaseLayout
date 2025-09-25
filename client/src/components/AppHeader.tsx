@@ -16,7 +16,8 @@ export function AppHeader() {
 
   const handleMenuClick = (item: { title: string; url: string }) => {
     console.log(`Navigating to ${item.title}: ${item.url}`)
-    // Add actual navigation logic here if needed
+    // Open URL in new tab
+    window.open(item.url, '_blank', 'noopener,noreferrer')
   }
 
   return (
