@@ -14,7 +14,7 @@ Preferred communication style: Simple, everyday language.
 - **Styling**: Tailwind CSS with custom UF brand colors (UF Orange #FA4616, UF Blue #0021A5)
 - **Typography**: Inter font family for primary text, JetBrains Mono for code/data
 - **State Management**: TanStack Query (React Query) for server state management
-- **Routing**: Wouter for lightweight client-side routing
+- **Routing**: React Router with BrowserRouter, supports VITE_BASENAME environment variable
 - **Theme System**: Light/dark mode support with CSS custom properties
 - **Layout**: confine all new ui features to the "main" section
 
@@ -37,6 +37,7 @@ Preferred communication style: Simple, everyday language.
 - **Session Security**: HTTP-only cookies, CSRF protection, secure flags in production
 - **User Profile**: Complete SAML attribute mapping including roles and organizational data
 - **Fallback Strategy**: Graceful degradation when SAML is not configured for development
+- **Current State**: Authentication temporarily disabled for development
 
 ## External Dependencies
 - **Database**: Neon Database (PostgreSQL-compatible serverless database)
@@ -47,3 +48,10 @@ Preferred communication style: Simple, everyday language.
 - **Build Tools**: Vite for development server and production builds, esbuild for server bundling
 
 The architecture prioritizes University of Florida brand compliance, accessibility standards, and developer experience while maintaining scalability and security best practices.
+
+## Recent Changes (September 2025)
+- **Profile System**: Migrated profile dropdown from external API to SAML session data from `/api/auth/me`
+- **Routing Migration**: Replaced Wouter with React Router and BrowserRouter for better integration
+- **UFID Privacy**: Implemented masking functionality with toggle visibility for user UFID display
+- **Authentication**: Currently disabled temporarily for development purposes
+- **Main Content**: Cleared for template customization
