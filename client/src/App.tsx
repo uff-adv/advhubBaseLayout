@@ -13,10 +13,6 @@ function ProtectedContent() {
     <div className="flex flex-col h-screen w-full">
       <AppHeader />
       <main className="flex-1 overflow-hidden">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
       </main>
     </div>
   );

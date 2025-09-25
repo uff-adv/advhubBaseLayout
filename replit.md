@@ -16,6 +16,7 @@ Preferred communication style: Simple, everyday language.
 - **State Management**: TanStack Query (React Query) for server state management
 - **Routing**: Wouter for lightweight client-side routing
 - **Theme System**: Light/dark mode support with CSS custom properties
+- **Layout**: confine all new ui features to the "main" section
 
 ## Backend Architecture
 - **Runtime**: Node.js with Express.js framework
