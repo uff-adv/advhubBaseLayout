@@ -8,6 +8,15 @@ interface TokenResponse {
 }
 
 interface UFMenuItem {
+  navId?: number;
+  navName?: string;
+  tabName?: string;
+  parentNavId?: number;
+  childNavId?: number;
+  navTypeId?: number;
+  order?: number;
+  navUrl?: string;
+  // Legacy fields for backward compatibility
   id?: string;
   title?: string;
   name?: string;
@@ -16,7 +25,6 @@ interface UFMenuItem {
   link?: string;
   href?: string;
   description?: string;
-  order?: number;
   parentId?: string;
   isActive?: boolean;
   [key: string]: any;

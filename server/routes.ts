@@ -64,30 +64,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const menuItems = await ufApiService.getTopMenu();
       
-      // Transform menu items to our expected format
+      // Transform menu items using UF API structure (navName → title, navUrl → url)
       const transformedItems = menuItems.map((item, index) => ({
-        id: item.id || `menu-${index}`,
-        title: item.title || item.name || item.displayName || 'Menu Item',
-        url: item.url || item.link || item.href || '#',
-        description: item.description || '',
-        order: item.order !== undefined ? item.order : index,
-        parentId: item.parentId || null,
-        isActive: item.isActive !== false,
+        id: (item.NavId || item.navId)?.toString() || item.id || `menu-${index}`,
+        title: item.NavName || item.navName || item.title || item.name || item.displayName || 'Menu Item',
+        url: item.NavUrl || item.navUrl || item.url || item.link || item.href || '#',
+        description: item.TabName || item.tabName || item.description || '',
+        order: item.Order !== undefined ? item.Order : (item.order !== undefined ? item.order : index),
+        parentId: (item.ParentNavId || item.parentNavId)?.toString() || item.parentId || null,
+        navTypeId: item.NavTypeId || item.navTypeId || null,
+        isActive: item.IsActive !== false && item.isActive !== false,
       }));
-
       res.json(transformedItems);
     } catch (error) {
       console.error('Failed to fetch UF menu data:', error);
       
-      // Return fallback menu on error
+      // Return fallback menu using the UF structure format (your sample data)
       const fallbackMenu = [
-        { id: 'dashboard', title: 'Dashboard', url: '/', description: 'Main dashboard', order: 1 },
-        { id: 'advancement', title: 'Advancement', url: '/advancement', description: 'Advancement tools', order: 2 },
-        { id: 'analytics', title: 'Analytics', url: '/analytics', description: 'Data analytics', order: 3 },
-        { id: 'reports', title: 'Reports', url: '/reports', description: 'Generate reports', order: 4 },
-        { id: 'settings', title: 'Settings', url: '/settings', description: 'Application settings', order: 5 },
+        { 
+          id: '3605', 
+          title: 'Announcement HUB', 
+          url: 'https://ufadvancement.quickbase.com/db/btajmkmy7?a=dbpage&pageID=54', 
+          description: 'Announcement HUB', 
+          order: 1,
+          navTypeId: 2
+        },
+        { 
+          id: '3606', 
+          title: 'Event HUB', 
+          url: 'https://ufadvancement.quickbase.com/db/btajmkmy7?a=dbpage&pageID=52', 
+          description: 'Event HUB', 
+          order: 2,
+          navTypeId: 2
+        },
+        { 
+          id: '3607', 
+          title: 'Knowledge HUB', 
+          url: 'https://ufadvancement.quickbase.com/db/btajmkmy7?a=dbpage&pageID=48', 
+          description: 'Knowledge HUB', 
+          order: 3,
+          navTypeId: 2
+        },
+        { 
+          id: '3608', 
+          title: 'Recognition HUB', 
+          url: 'https://ufadvancement.quickbase.com/db/btajmkmy7?a=dbpage&pageID=53', 
+          description: 'Recognition HUB', 
+          order: 4,
+          navTypeId: 2
+        }
       ];
       
+      console.log('Using fallback menu data (UF API unavailable)');
       res.status(200).json(fallbackMenu); // Still return 200 with fallback data
     }
   });
