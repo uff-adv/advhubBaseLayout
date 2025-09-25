@@ -46,6 +46,11 @@ Preferred communication style: Simple, everyday language.
 - **Development**: Replit integration with cartographer and runtime error overlay
 - **UI Framework**: Radix UI primitives for accessible component foundation
 - **Build Tools**: Vite for development server and production builds, esbuild for server bundling
+### API Services
+- **Menu System**: Dynamic menu populated from UF API at https://advapi.uff.ufl.edu/api/Test/TopMenu
+- **Authentication**: Get auth token from https://advids.uff.ufl.edu/connect/token
+  - Header: Content-Type should be set to application/x-www-form-urlencoded
+  - Body: client ID and client secret
 
 The architecture prioritizes University of Florida brand compliance, accessibility standards, and developer experience while maintaining scalability and security best practices.
 
@@ -55,3 +60,7 @@ The architecture prioritizes University of Florida brand compliance, accessibili
 - **UFID Privacy**: Implemented masking functionality with toggle visibility for user UFID display
 - **Authentication**: Currently disabled temporarily for development purposes
 - **Main Content**: Cleared for template customization
+- **Dynamic Menu System**: AdvancementHUB menu now fetches from UF API (https://advapi.uff.ufl.edu/api/Test/TopMenu)
+  - Graceful fallback to default menu items when API is unavailable
+  - Loading states and error handling implemented
+  - Menu items include: Dashboard, Advancement, Analytics, Reports, Settings
